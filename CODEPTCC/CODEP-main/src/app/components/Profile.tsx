@@ -38,7 +38,7 @@ export function Profile() {
 
   const achievements = [
     { icon: <Star size={20} />, bg: "bg-amber-50", color: "text-amber-500", border: "border-amber-200", title: "Primeira Aula", desc: "Completou a primeira aula", unlocked: completedLessons >= 1 },
-    { icon: <Flame size={20} />, bg: "bg-orange-50", color: "text-orange-500", border: "border-orange-200", title: "7 Dias Seguidos", desc: "Estudou por 7 dias consecutivos", unlocked: true },
+    { icon: <Flame size={20} />, bg: "bg-orange-50", color: "text-orange-500", border: "border-orange-200", title: "7 Dias Seguidos", desc: "Estudou por 7 dias consecutivos", unlocked: false },
     { icon: <TrendingUp size={20} />, bg: "bg-emerald-50", color: "text-emerald-600", border: "border-emerald-200", title: "Em Progresso", desc: "50% de um curso concluído", unlocked: enrolledCourses.some(c => (progressByCourse.get(c.id) ?? 0) >= 50) },
     { icon: <Target size={20} />, bg: "bg-blue-50", color: "text-blue-600", border: "border-blue-200", title: "Desafiante", desc: "Resolveu um desafio de código", unlocked: false },
     { icon: <Zap size={20} />, bg: "bg-yellow-50", color: "text-yellow-600", border: "border-yellow-200", title: "Quiz Master", desc: "10/10 num quiz", unlocked: false },
