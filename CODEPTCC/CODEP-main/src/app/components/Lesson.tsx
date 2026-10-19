@@ -278,6 +278,20 @@ export function Lesson() {
               </div>
             </div>
 
+            {!theory.videoUrl && theory.videoLesson && (
+              <a href={theory.videoLesson.url} target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-3 bg-slate-900 border border-slate-800 hover:border-rose-500/50 rounded-xl p-4 mb-4 transition group">
+                <div className="w-9 h-9 bg-rose-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Video size={16} className="text-rose-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs text-slate-500 font-semibold mb-0.5">Assista uma aula em vídeo</p>
+                  <p className="text-sm text-slate-200 font-semibold truncate group-hover:text-rose-400 transition">{theory.videoLesson.title}</p>
+                </div>
+                <ExternalLink size={15} className="text-slate-500 group-hover:text-rose-400 transition flex-shrink-0" />
+              </a>
+            )}
+
             {theory.furtherReading && (
               <a href={theory.furtherReading.url} target="_blank" rel="noopener noreferrer"
                 className="flex items-center gap-3 bg-slate-900 border border-slate-800 hover:border-blue-500/50 rounded-xl p-4 mb-4 transition group">

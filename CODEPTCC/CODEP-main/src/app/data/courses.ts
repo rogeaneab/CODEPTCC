@@ -38,6 +38,9 @@ export interface Lesson {
   predict?: { options: string[]; correctIndex: number };
   /** Link opcional pra quem quiser se aprofundar no assunto da teoria. */
   furtherReading?: { title: string; url: string };
+  /** Link opcional pra uma aula em vídeo externa sobre o assunto, pra
+   * lições de teoria que não têm vídeo embutido (videoUrl). */
+  videoLesson?: { title: string; url: string };
 }
 
 // A ordem deste array é a trilha de evolução do aluno: do básico ao
