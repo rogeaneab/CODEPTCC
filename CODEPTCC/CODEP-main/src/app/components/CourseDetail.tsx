@@ -1,14 +1,43 @@
+import { useState, useEffect } from "react";
+import confetti from "canvas-confetti";
 import { Link, useParams, useNavigate } from "react-router";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { getCourseById, getCourseUnits } from "../data/courses";
 import { isLessonComplete, isCourseUnlocked, getPreviousCourse, getCourseProgress } from "../lib/progress";
-import { ArrowLeft, BookOpen, Clock, CheckCircle2, Play, GraduationCap, BarChart2, Video, Layers, Lock, BookOpenCheck, Code2 } from "lucide-react";
+import { ArrowLeft, BookOpen, Clock, CheckCircle2, Play, GraduationCap, BarChart2, Video, Layers, Lock, BookOpenCheck, Code2, PartyPopper, X } from "lucide-react";
+
+const CONFETTI_COLORS = ["#2563eb", "#22d3ee", "#f59e0b", "#10b981", "#f43f5e"];
 
 export function CourseDetail() {
   const { courseId } = useParams();
   const navigate = useNavigate();
   const course = getCourseById(courseId || "");
   const units = getCourseUnits(courseId || "");
+
+  const isUnitDone = (u: typeof units[number]) =>
+    (!u.theory || isLessonComplete(u.theory.id)) && (!u.practice || isLessonComplete(u.practice.id));
+  const completedUnits = units.filter(isUnitDone).length;
+  const progressPct = units.length > 0 ? Math.round((completedUnits / units.length) * 100) : 0;
+
+  const [showCelebration, setShowCelebration] = useState(false);
+
+  // Comemoração (confete) na primeira vez que o curso bate 100%.
+  useEffect(() => {
+    if (!course || progressPct !== 100) return;
+    const key = `codep_celebrated_${course.id}`;
+    if (localStorage.getItem(key)) return;
+    localStorage.setItem(key, "1");
+    setShowCelebration(true);
+
+    confetti({ particleCount: 130, spread: 100, startVelocity: 45, origin: { y: 0.4 }, colors: CONFETTI_COLORS });
+    const end = Date.now() + 1200;
+    (function burst() {
+      confetti({ particleCount: 4, angle: 60, spread: 60, origin: { x: 0 }, colors: CONFETTI_COLORS });
+      confetti({ particleCount: 4, angle: 120, spread: 60, origin: { x: 1 }, colors: CONFETTI_COLORS });
+      if (Date.now() < end) requestAnimationFrame(burst);
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [progressPct, course?.id]);
 
   if (!course) return (
     <div className="max-w-7xl mx-auto px-4 py-16 text-center">
@@ -55,12 +84,6 @@ export function CourseDetail() {
     return map[id] || map["fundamentos-computacao"];
   };
 
-  const isUnitDone = (u: typeof units[number]) =>
-    (!u.theory || isLessonComplete(u.theory.id)) && (!u.practice || isLessonComplete(u.practice.id));
-
-  const completedUnits = units.filter(isUnitDone).length;
-  const progressPct = units.length > 0 ? Math.round((completedUnits / units.length) * 100) : 0;
-
   const levelBadge: Record<string, string> = {
     "Iniciante": "bg-emerald-50 text-emerald-700 border border-emerald-200",
     "Intermediário": "bg-amber-50 text-amber-700 border border-amber-200",
@@ -77,6 +100,32 @@ export function CourseDetail() {
 
   return (
     <div className="pb-20 md:pb-8">
+      {/* Comemoração ao concluir o curso */}
+      {showCelebration && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 px-4"
+          onClick={() => setShowCelebration(false)}>
+          <div onClick={(e) => e.stopPropagation()}
+            className="relative bg-white rounded-2xl max-w-sm w-full p-8 text-center shadow-2xl">
+            <button onClick={() => setShowCelebration(false)}
+              aria-label="Fechar"
+              className="absolute top-3 right-3 text-slate-400 hover:text-slate-700 transition">
+              <X size={18} />
+            </button>
+            <div className="w-16 h-16 bg-amber-50 border border-amber-200 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <PartyPopper className="text-amber-500" size={28} />
+            </div>
+            <h2 className="text-xl font-extrabold text-slate-900 mb-2">Parabéns! 🎉</h2>
+            <p className="text-slate-500 text-sm mb-6">
+              Você concluiu o curso <strong>{course.title}</strong>! Mande ver no próximo.
+            </p>
+            <button onClick={() => setShowCelebration(false)}
+              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold px-5 py-2.5 rounded-xl transition">
+              Continuar
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Hero */}
       <div className="relative h-52 md:h-64 bg-slate-900 overflow-hidden">
         <ImageWithFallback src={getImageUrl(course.id)} alt={course.title}
