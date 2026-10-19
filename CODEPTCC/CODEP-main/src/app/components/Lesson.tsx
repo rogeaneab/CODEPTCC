@@ -551,7 +551,9 @@ export function Lesson() {
               </Link>
             ))}
           </div>
-          {nextUnit
+          {activeTab === "theory" && theory && !theoryWatched
+            ? <div />
+            : nextUnit
             ? <Link to={`/app/courses/${courseId}/lessons/${unitLessonIdFor(nextUnit)}`}
                 className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold px-4 py-2 rounded-xl transition">
                 Próxima<ArrowRight size={16} />
