@@ -129,7 +129,8 @@ export function Login() {
             </button>
           </form>
 
-          {/* Social */}
+          {/* Social (só no login, não faz sentido no cadastro, pois não é de verdade) */}
+          {isLogin && (
           <div className="mt-6">
             <div className="relative flex items-center gap-3 mb-4">
               <div className="flex-1 border-t border-gray-200" />
@@ -154,6 +155,7 @@ export function Login() {
               </button>
             </div>
           </div>
+          )}
 
           <div className="mt-6 text-center">
             <p className="text-slate-500 text-sm">
