@@ -12,21 +12,23 @@ const MAX_ACTIVITY_ENTRIES = 30;
 interface ProgressState {
   completedLessonIds: string[];
   completedChallengeIds: string[];
+  completedQuizIds: string[];
   points: number;
 }
 
 function readState(): ProgressState {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { completedLessonIds: [], completedChallengeIds: [], points: 0 };
+    if (!raw) return { completedLessonIds: [], completedChallengeIds: [], completedQuizIds: [], points: 0 };
     const parsed = JSON.parse(raw);
     return {
       completedLessonIds: Array.isArray(parsed.completedLessonIds) ? parsed.completedLessonIds : [],
       completedChallengeIds: Array.isArray(parsed.completedChallengeIds) ? parsed.completedChallengeIds : [],
+      completedQuizIds: Array.isArray(parsed.completedQuizIds) ? parsed.completedQuizIds : [],
       points: typeof parsed.points === "number" ? parsed.points : 0,
     };
   } catch {
-    return { completedLessonIds: [], completedChallengeIds: [], points: 0 };
+    return { completedLessonIds: [], completedChallengeIds: [], completedQuizIds: [], points: 0 };
   }
 }
 
@@ -75,6 +77,23 @@ export function markChallengeComplete(challengeId: string, title: string, xp: nu
   writeState(state);
   logActivity("challenge", `Desafio "${title}" resolvido`);
   return { alreadyDone: false, points: state.points };
+}
+
+export function isQuizComplete(quizId: string): boolean {
+  return readState().completedQuizIds.includes(quizId);
+}
+
+/** Marca o quiz como concluído (só na primeira vez, não soma XP de novo —
+ * o XP do quiz já é somado pergunta a pergunta via addXp). */
+export function markQuizComplete(quizId: string, title: string): { alreadyDone: boolean } {
+  const state = readState();
+  if (state.completedQuizIds.includes(quizId)) {
+    return { alreadyDone: true };
+  }
+  state.completedQuizIds.push(quizId);
+  writeState(state);
+  logActivity("quiz", `Quiz "${title}" concluído`);
+  return { alreadyDone: false };
 }
 
 export function getTotalPoints(): number {

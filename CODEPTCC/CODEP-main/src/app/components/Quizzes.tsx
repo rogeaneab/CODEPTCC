@@ -1,8 +1,12 @@
 import { Link } from "react-router";
 import { quizzes } from "../data/quizzes";
-import { Trophy, Zap, Star, ChevronRight } from "lucide-react";
+import { getTotalPoints, isQuizComplete } from "../lib/progress";
+import { Trophy, Zap, Star, ChevronRight, CheckCircle2 } from "lucide-react";
 
 export function Quizzes() {
+  const totalXp = getTotalPoints();
+  const completedCount = quizzes.filter((q) => isQuizComplete(q.id)).length;
+
   return (
     <div className="pb-24 md:pb-8">
       {/* Header */}
@@ -32,14 +36,14 @@ export function Quizzes() {
             <div className="w-8 h-8 bg-amber-50 border border-amber-100 rounded-lg flex items-center justify-center">
               <Trophy className="text-amber-500" size={16} />
             </div>
-            <span className="font-bold text-slate-900 text-sm">0 XP</span>
+            <span className="font-bold text-slate-900 text-sm">{totalXp} XP</span>
             <span className="text-slate-400 text-xs font-medium">total</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-blue-50 border border-blue-100 rounded-lg flex items-center justify-center">
               <Star className="text-blue-600" size={16} />
             </div>
-            <span className="font-bold text-slate-900 text-sm">0</span>
+            <span className="font-bold text-slate-900 text-sm">{completedCount}/{quizzes.length}</span>
             <span className="text-slate-400 text-xs font-medium">concluídos</span>
           </div>
         </div>
@@ -48,12 +52,19 @@ export function Quizzes() {
       {/* Quiz Cards */}
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          {quizzes.map((quiz) => (
+          {quizzes.map((quiz) => {
+            const done = isQuizComplete(quiz.id);
+            return (
             <Link
               key={quiz.id}
               to={`/app/quizzes/${quiz.id}`}
-              className="group bg-white rounded-2xl border border-gray-200 hover:border-blue-200 hover:shadow-md transition-all overflow-hidden"
+              className="group relative bg-white rounded-2xl border border-gray-200 hover:border-blue-200 hover:shadow-md transition-all overflow-hidden"
             >
+              {done && (
+                <div className="absolute top-3 right-3 z-10 flex items-center gap-1 bg-emerald-600 text-white text-xs font-bold px-2.5 py-1 rounded-full">
+                  <CheckCircle2 size={12} />Concluído
+                </div>
+              )}
               {/* Card Top */}
               <div
                 className="p-6 flex items-center gap-4"
@@ -100,7 +111,8 @@ export function Quizzes() {
                 </div>
               </div>
             </Link>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
