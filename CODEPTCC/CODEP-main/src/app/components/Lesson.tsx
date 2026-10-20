@@ -99,6 +99,12 @@ export function Lesson() {
   const [predictSelected, setPredictSelected] = useState<number | null>(null);
 
   useEffect(() => {
+    // Sem isso, ao trocar de aula a tela mantém a posição de rolagem da
+    // aula anterior, então a nova aula pode abrir já "no meio".
+    window.scrollTo(0, 0);
+  }, [unitKey]);
+
+  useEffect(() => {
     if (!currentUnit) return;
     const t = currentUnit.theory;
     const p = currentUnit.practice;
