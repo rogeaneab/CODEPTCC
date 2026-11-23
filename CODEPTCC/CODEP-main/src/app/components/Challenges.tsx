@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Trophy, Zap, Clock, Code2, CheckCircle2, Target, Star, ChevronRight, Flame, ArrowLeft, RotateCcw, Play, Lightbulb, X } from "lucide-react";
 import { isChallengeComplete, markChallengeComplete } from "../lib/progress";
-
+ 
 type Difficulty = "Iniciante" | "Intermediário" | "Avançado";
-
+ 
 interface Challenge {
   id: string;
   title: string;
@@ -19,7 +19,7 @@ interface Challenge {
   hints: string[];
   testDescription: string;
 }
-
+ 
 const challenges: Challenge[] = [
   {
     id: "fizzbuzz",
@@ -37,7 +37,7 @@ const challenges: Challenge[] = [
 // - "Fizz" para múltiplos de 3
 // - "Buzz" para múltiplos de 5
 // - O número nos outros casos
-
+ 
 for (let i = 1; i <= 100; i++) {
   // seu código aqui
 }`,
@@ -66,11 +66,11 @@ for (let i = 1; i <= 100; i++) {
     starterCode: `// Desafio: Verificador de Palíndromo
 // Retorne true se a string for palíndromo, false caso contrário
 // Ignore espaços e diferença de maiúsculas/minúsculas
-
+ 
 function ehPalindromo(texto) {
   // seu código aqui
 }
-
+ 
 // Testes
 console.log(ehPalindromo("arara"));       // true
 console.log(ehPalindromo("A man a plan")); // true
@@ -80,7 +80,7 @@ console.log(ehPalindromo("Anilina"));     // true`,
   const limpo = texto.toLowerCase().replace(/\\s/g, "");
   return limpo === limpo.split("").reverse().join("");
 }
-
+ 
 console.log(ehPalindromo("arara"));
 console.log(ehPalindromo("A man a plan"));
 console.log(ehPalindromo("hello"));
@@ -108,11 +108,11 @@ console.log(ehPalindromo("Anilina"));`,
 //   < 25    → "Peso normal"
 //   < 30    → "Sobrepeso"
 //   >= 30   → "Obesidade"
-
+ 
 function calcularIMC(peso, altura) {
   // seu código aqui
 }
-
+ 
 console.log(calcularIMC(70, 1.75)); // Peso normal
 console.log(calcularIMC(50, 1.75)); // Abaixo do peso
 console.log(calcularIMC(90, 1.70)); // Sobrepeso`,
@@ -125,7 +125,7 @@ console.log(calcularIMC(90, 1.70)); // Sobrepeso`,
   else classificacao = "Obesidade";
   return \`IMC: \${imc.toFixed(1)} → \${classificacao}\`;
 }
-
+ 
 console.log(calcularIMC(70, 1.75));
 console.log(calcularIMC(50, 1.75));
 console.log(calcularIMC(90, 1.70));`,
@@ -147,29 +147,29 @@ console.log(calcularIMC(90, 1.70));`,
     topics: ["arrays", "objetos", "funções"],
     starterCode: `// Desafio: Gerenciador de Tarefas
 // Simule o comportamento de um to-do list usando um array
-
+ 
 let tarefas = [];
 let proximoId = 1;
-
+ 
 function adicionarTarefa(texto) {
   // Adicione ao array tarefas com id, texto e concluida: false
 }
-
+ 
 function concluirTarefa(id) {
   // Marque a tarefa como concluida: true
 }
-
+ 
 function removerTarefa(id) {
   // Remova do array
 }
-
+ 
 function listarTarefas() {
   // Exiba cada tarefa no console
   tarefas.forEach(t => {
     console.log(\`[\${t.concluida ? "X" : " "}] #\${t.id} - \${t.texto}\`);
   });
 }
-
+ 
 // Teste
 adicionarTarefa("Aprender JavaScript");
 adicionarTarefa("Fazer exercícios");
@@ -179,26 +179,26 @@ removerTarefa(2);
 listarTarefas();`,
     solution: `let tarefas = [];
 let proximoId = 1;
-
+ 
 function adicionarTarefa(texto) {
   tarefas.push({ id: proximoId++, texto, concluida: false });
 }
-
+ 
 function concluirTarefa(id) {
   const t = tarefas.find(t => t.id === id);
   if (t) t.concluida = true;
 }
-
+ 
 function removerTarefa(id) {
   tarefas = tarefas.filter(t => t.id !== id);
 }
-
+ 
 function listarTarefas() {
   tarefas.forEach(t => {
     console.log(\`[\${t.concluida ? "X" : " "}] #\${t.id} - \${t.texto}\`);
   });
 }
-
+ 
 adicionarTarefa("Aprender JavaScript");
 adicionarTarefa("Fazer exercícios");
 adicionarTarefa("Revisar código");
@@ -223,14 +223,14 @@ listarTarefas();`,
     topics: ["algoritmos", "arrays", "otimização"],
     starterCode: `// Desafio: Crivo de Eratóstenes
 // Encontre todos os números primos até N
-
+ 
 function crivoEratostenes(n) {
   // Crie um array de booleanos [true, true, true, ...]
   // Marque 0 e 1 como false
   // Para cada número primo p, marque seus múltiplos como false
   // Retorne os índices que ainda são true
 }
-
+ 
 const primos = crivoEratostenes(50);
 console.log(primos);
 // Esperado: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
@@ -247,7 +247,7 @@ console.log("Total de primos até 50:", primos.length);`,
   }
   return ehPrimo.reduce((acc, v, i) => (v ? [...acc, i] : acc), []);
 }
-
+ 
 const primos = crivoEratostenes(50);
 console.log(primos);
 console.log("Total de primos até 50:", primos.length);`,
@@ -259,13 +259,13 @@ console.log("Total de primos até 50:", primos.length);`,
     testDescription: "crivoEratostenes(50) deve retornar [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]",
   },
 ];
-
+ 
 const difficultyConfig: Record<Difficulty, { color: string; bg: string; border: string }> = {
   Iniciante: { color: "text-emerald-700", bg: "bg-emerald-50", border: "border-emerald-100" },
   Intermediário: { color: "text-amber-700", bg: "bg-amber-50", border: "border-amber-100" },
   Avançado: { color: "text-red-700", bg: "bg-red-50", border: "border-red-100" },
 };
-
+ 
 function ChallengePlayer({ challenge, onClose, onComplete }: {
   challenge: Challenge;
   onClose: () => void;
@@ -276,7 +276,7 @@ function ChallengePlayer({ challenge, onClose, onComplete }: {
   const [showSolution, setShowSolution] = useState(false);
   const [showHints, setShowHints] = useState(false);
   const [solved, setSolved] = useState(isChallengeComplete(challenge.id));
-
+ 
   const runCode = () => {
     try {
       const logs: string[] = [];
@@ -291,30 +291,49 @@ function ChallengePlayer({ challenge, onClose, onComplete }: {
       setOutput(`Erro: ${e instanceof Error ? e.message : String(e)}`);
     }
   };
-
+ 
+  // Executa um código capturando o que ele imprime com console.log.
+  const capture = (src: string) => {
+    const logs: string[] = [];
+    const orig = console.log;
+    console.log = (...args) => {
+      logs.push(args.map(a => String(a)).join(" "));
+    };
+    try {
+      // eslint-disable-next-line no-new-func
+      new Function(src)();
+    } finally {
+      console.log = orig;
+    }
+    return logs;
+  };
+ 
+  const normalize = (lines: string[]) =>
+    lines.map(l => l.replace(/\s+$/g, "")).join("\n").trim();
+ 
   const verify = () => {
     try {
-      const logs: string[] = [];
-      const orig = console.log;
-      console.log = (...args) =>
-        logs.push(args.map(a => String(a)).join(" "));
-      // eslint-disable-next-line no-new-func
-      new Function(code)();
-      console.log = orig;
-      if (logs.length > 0) {
+      const logs = capture(code);
+      if (logs.length === 0) {
+        setOutput("❌ Nenhum output detectado. Certifique-se de usar console.log() para exibir resultados.");
+        return;
+      }
+      // A saída do estudante é comparada com a saída da solução de referência.
+      const expected = normalize(capture(challenge.solution));
+      if (normalize(logs) === expected) {
         const { alreadyDone } = markChallengeComplete(challenge.id, challenge.title, challenge.xp);
         setSolved(true);
         onComplete(challenge.id);
         const xpLine = alreadyDone ? "Você já tinha resolvido esse desafio antes." : `+${challenge.xp} XP`;
         setOutput(`✅ Parabéns! Desafio concluído! ${xpLine}\n\n--- Output ---\n${logs.join("\n")}`);
       } else {
-        setOutput("❌ Nenhum output detectado. Certifique-se de usar console.log() para exibir resultados.");
+        setOutput(`❌ A saída não é a esperada. Revise o enunciado e o critério de aceitação e tente de novo.\n\n--- Sua saída ---\n${logs.join("\n")}`);
       }
     } catch (e) {
       setOutput(`❌ Erro ao verificar: ${e instanceof Error ? e.message : String(e)}`);
     }
   };
-
+ 
   return (
     <div className="fixed inset-0 z-50 flex flex-col bg-white">
       {/* Top bar */}
@@ -351,10 +370,10 @@ function ChallengePlayer({ challenge, onClose, onComplete }: {
           </div>
         </div>
       </div>
-
+ 
       {/* Split layout */}
       <div className="flex-1 overflow-hidden grid grid-cols-1 lg:grid-cols-2">
-
+ 
         {/* Left — instructions */}
         <div className="bg-white border-b lg:border-b-0 lg:border-r border-gray-100 overflow-y-auto p-6">
           <div className="flex items-center gap-2 mb-4 flex-wrap">
@@ -365,17 +384,17 @@ function ChallengePlayer({ challenge, onClose, onComplete }: {
               <Clock size={11} />{challenge.timeEstimate}
             </span>
           </div>
-
+ 
           <h2 className="text-lg font-extrabold text-slate-900 mb-2">{challenge.title}</h2>
           <p className="text-sm text-slate-500 leading-relaxed mb-5">{challenge.description}</p>
-
+ 
           {challenge.testDescription && (
             <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-4">
               <p className="text-xs font-bold text-blue-800 mb-1">Critério de aceitação</p>
               <p className="text-xs text-blue-700">{challenge.testDescription}</p>
             </div>
           )}
-
+ 
           <div className="flex flex-wrap gap-1.5 mb-5">
             {challenge.topics.map(t => (
               <span key={t} className="text-xs text-slate-500 bg-slate-50 border border-gray-100 px-2 py-0.5 rounded-full font-medium">
@@ -383,7 +402,7 @@ function ChallengePlayer({ challenge, onClose, onComplete }: {
               </span>
             ))}
           </div>
-
+ 
           {/* Hints */}
           {challenge.hints.length > 0 && (
             <div className="mb-4">
@@ -409,7 +428,7 @@ function ChallengePlayer({ challenge, onClose, onComplete }: {
               )}
             </div>
           )}
-
+ 
           {/* Solution */}
           {challenge.solution && (
             showSolution ? (
@@ -425,7 +444,7 @@ function ChallengePlayer({ challenge, onClose, onComplete }: {
             )
           )}
         </div>
-
+ 
         {/* Right — editor */}
         <div className="bg-slate-950 flex flex-col min-h-[480px] lg:min-h-0">
           <div className="flex items-center justify-between px-4 py-3 border-b border-slate-800 flex-shrink-0">
@@ -452,11 +471,11 @@ function ChallengePlayer({ challenge, onClose, onComplete }: {
               </button>
             </div>
           </div>
-
+ 
           <textarea value={code} onChange={e => setCode(e.target.value)}
             className="flex-1 p-4 bg-slate-950 text-slate-100 font-mono text-sm resize-none focus:outline-none min-h-[240px]"
             spellCheck={false} style={{ tabSize: 2 }} />
-
+ 
           {output && (
             <div className="border-t border-slate-800 p-4 bg-slate-900 max-h-48 overflow-y-auto flex-shrink-0">
               <div className="flex items-center justify-between mb-1.5">
@@ -473,7 +492,7 @@ function ChallengePlayer({ challenge, onClose, onComplete }: {
     </div>
   );
 }
-
+ 
 export function Challenges() {
   const [filter, setFilter] = useState<"all" | Difficulty>("all");
   const [activeChallenge, setActiveChallenge] = useState<Challenge | null>(null);
@@ -482,16 +501,16 @@ export function Challenges() {
   const [completedIds, setCompletedIds] = useState<Set<string>>(
     () => new Set(challenges.filter(c => isChallengeComplete(c.id)).map(c => c.id))
   );
-
+ 
   const handleComplete = (id: string) => {
     setCompletedIds(prev => new Set([...prev, id]));
   };
-
+ 
   const filtered = filter === "all" ? challenges : challenges.filter(c => c.difficulty === filter);
   const weeklyChallenge = challenges.find(c => c.weekly);
   const completedCount = completedIds.size;
   const totalXp = challenges.filter(c => completedIds.has(c.id)).reduce((acc, c) => acc + c.xp, 0);
-
+ 
   if (activeChallenge) {
     return (
       <ChallengePlayer
@@ -501,7 +520,7 @@ export function Challenges() {
       />
     );
   }
-
+ 
   return (
     <div className="pb-24 md:pb-8">
       {/* Header */}
@@ -521,7 +540,7 @@ export function Challenges() {
           <p className="text-slate-500 text-sm">Resolva desafios e ganhe XP enquanto pratica o que aprendeu.</p>
         </div>
       </div>
-
+ 
       {/* Stats */}
       <div className="bg-white border-b border-gray-100">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center gap-6">
@@ -548,9 +567,9 @@ export function Challenges() {
           </div>
         </div>
       </div>
-
+ 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
-
+ 
         {/* Weekly Challenge */}
         {weeklyChallenge && (
           <div className="bg-blue-600 rounded-2xl p-6 mb-8 relative overflow-hidden">
@@ -581,7 +600,7 @@ export function Challenges() {
             </div>
           </div>
         )}
-
+ 
         {/* Filter */}
         <div className="flex items-center gap-2 mb-6">
           {(["all", "Iniciante", "Intermediário", "Avançado"] as const).map(f => (
@@ -596,13 +615,13 @@ export function Challenges() {
             </button>
           ))}
         </div>
-
+ 
         {/* Challenges Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {filtered.map(challenge => {
             const diff = difficultyConfig[challenge.difficulty];
             const isCompleted = completedIds.has(challenge.id);
-
+ 
             return (
               <div key={challenge.id}
                 className="bg-white rounded-xl border border-gray-200 p-5 transition hover:shadow-md hover:-translate-y-0.5 cursor-pointer"
@@ -624,10 +643,10 @@ export function Challenges() {
                   </div>
                   {isCompleted && <CheckCircle2 className="text-emerald-500 flex-shrink-0" size={20} />}
                 </div>
-
+ 
                 <h3 className="font-bold text-slate-900 mb-2">{challenge.title}</h3>
                 <p className="text-slate-500 text-xs leading-relaxed mb-4 line-clamp-2">{challenge.description}</p>
-
+ 
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {challenge.topics.map(t => (
                     <span key={t} className="text-xs text-slate-500 bg-slate-50 border border-gray-100 px-2 py-0.5 rounded-full font-medium">
@@ -635,13 +654,13 @@ export function Challenges() {
                     </span>
                   ))}
                 </div>
-
+ 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3 text-xs text-slate-400 font-medium">
                     <span className="flex items-center gap-1"><Clock size={12} />{challenge.timeEstimate}</span>
                     <span className="flex items-center gap-1 text-amber-500 font-bold"><Star size={12} />+{challenge.xp} XP</span>
                   </div>
-
+ 
                   <span className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition ${
                     isCompleted
                       ? "bg-emerald-50 text-emerald-600 border border-emerald-100"
@@ -662,3 +681,4 @@ export function Challenges() {
     </div>
   );
 }
+ 
